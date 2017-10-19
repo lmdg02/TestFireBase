@@ -19,8 +19,6 @@ public class ChatMessage {
         Calendar c = Calendar.getInstance();
 
         int year = c.get(Calendar.YEAR);
-
-        // Trả về giá trị từ 0 - 11
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
         int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -28,7 +26,6 @@ public class ChatMessage {
         int second = c.get(Calendar.SECOND);
 
 
-        // Initialize to current time
         messageTime =  year + "-" + (month + 1) + "-" + day //
                 + " (" + hour + ":" + minute + ":" + second+")" ;
     }

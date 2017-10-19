@@ -37,18 +37,17 @@ public class TestChatApp extends AppCompatActivity {
     DatabaseReference mDatabase;
     EditText input;
 
-    public String test() {
-        String test;
-        if ((test = FirebaseAuth.getInstance()
+    public String checkEmailAndName() {
+        String check;
+        if ((check = FirebaseAuth.getInstance()
                 .getCurrentUser().getDisplayName()) == null) {
-            test = FirebaseAuth.getInstance()
+            check = FirebaseAuth.getInstance()
                     .getCurrentUser().getEmail();
-        }else{
-            test = FirebaseAuth.getInstance()
+        } else {
+            check = FirebaseAuth.getInstance()
                     .getCurrentUser().getDisplayName();
         }
-
-        return test;
+        return check;
     }
 
     @Override
@@ -58,22 +57,20 @@ public class TestChatApp extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("AppChat");
         input = (EditText) findViewById(R.id.input);
 
-//        FloatingActionButton fab =
-//                (FloatingActionButton) findViewById(R.id.fab);
-        ImageView img = (ImageView) findViewById(R.id.image);
+        ImageView imageSend = (ImageView) findViewById(R.id.imageSend);
         ListView listOfMessages = (ListView) findViewById(R.id.list_of_messages);
 
         listMessage = new ArrayList<>();
         arrayAdapter = new MyArrayAdapter(this, R.layout.message, listMessage);
         listOfMessages.setAdapter(arrayAdapter);
 
-        img.setOnClickListener(new View.OnClickListener() {
+        imageSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ChatMessage cm = new ChatMessage(input.getText().toString(), "Lee");
 
                 mDatabase.push().setValue(new ChatMessage(input.getText().toString(),
-                        test()));
+                        checkEmailAndName()));
                 input.setText("");
             }
         });
@@ -84,6 +81,7 @@ public class TestChatApp extends AppCompatActivity {
                 ChatMessage cm = dataSnapshot.getValue(ChatMessage.class);
                 cm.setId(dataSnapshot.getKey());
                 listMessage.add(cm);
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override

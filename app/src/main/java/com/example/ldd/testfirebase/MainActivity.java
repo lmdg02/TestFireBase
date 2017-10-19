@@ -18,8 +18,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 //import com.firebase.ui.auth.AuthUI;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -160,17 +162,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_sign_out) {
-//            AuthUI.getInstance().signOut(this)
-//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            Toast.makeText(MainActivity.this,
-//                                    "Đăng xuất thành công",
-//                                    Toast.LENGTH_LONG)
-//                                    .show();
-//                            finish();
-//                        }
-//                    });
+            LoginManager.getInstance().logOut();
+            FirebaseAuth.getInstance().signOut();
+//            finish();
+            Toast.makeText(this,"Đăng xuất thành công",Toast.LENGTH_SHORT).show();
         }
         if (item.getItemId() == R.id.Chat){
             startActivity(new Intent(this,TestChatApp.class));
